@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    container_name: cars_store_app
+    ports:
+      - 9090:9090
+    volumes:
+      - .:/usr/app
