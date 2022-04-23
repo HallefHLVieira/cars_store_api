@@ -1,6 +1,19 @@
 version: '3.7'
 
 services:
+  database_ignite_pg:
+    image: postgres
+    container_name: database_ignite
+    restart: always
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=cars_store
+    volumes:
+      - pgdata:/data/postgres
+
   app:
     build: .
     container_name: cars_store_app
@@ -8,3 +21,11 @@ services:
       - 9090:9090
     volumes:
       - .:/usr/app
+    links:
+      - database_ignite_pg
+    depends_on:
+      - database_ignite_pg
+
+volumes:
+  pgdata:
+    driver: local # is value default
